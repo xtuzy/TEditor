@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace TEditor.Abstractions
 {
-    internal interface ITEditorAPI
+    public interface ITEditorAPI
     {
         void AlignCenter();
 

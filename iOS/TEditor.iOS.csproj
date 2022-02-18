@@ -31,19 +31,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
-    <MtouchArch>ARMv7, ARM64</MtouchArch>
+    <MtouchArch>ARM64</MtouchArch>
     <ConsolePause>false</ConsolePause>
     <CodesignKey>iPhone Developer</CodesignKey>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
-    <DebugType>full</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\iPhoneSimulator\Release</OutputPath>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <MtouchArch>i386</MtouchArch>
-    <ConsolePause>false</ConsolePause>
-    <MtouchLink>None</MtouchLink>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
     <DebugSymbols>true</DebugSymbols>
@@ -54,7 +44,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
-    <MtouchArch>ARMv7, ARM64</MtouchArch>
+    <MtouchArch>ARM64</MtouchArch>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <MtouchProfiling>true</MtouchProfiling>
     <CodesignKey>iPhone Developer</CodesignKey>
@@ -85,9 +75,6 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="Xamarin.iOS" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controls\TEditorViewController.cs" />
@@ -199,10 +186,6 @@
     </BundleResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TEditor\TEditor.csproj">
-      <Project>{35D75E0C-AB1E-41E5-BB75-3344F3DDF01F}</Project>
-      <Name>TEditor</Name>
-    </ProjectReference>
     <ProjectReference Include="..\TEditor.Abstractions\TEditor.Abstractions.csproj">
       <Project>{A3FF38D4-3875-422C-B6BA-6720DA5E54BE}</Project>
       <Name>TEditor.Abstractions</Name>

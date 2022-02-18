@@ -4,21 +4,23 @@ using Android.Widget;
 using System.Collections.Generic;
 using Android.Views;
 using Android.Content;
-using Android.Support.V7.App;
 using TEditor.Abstractions;
+using AndroidX.AppCompat.App;
+using AndroidX.AppCompat.Widget;
+using Toolbar = AndroidX.AppCompat.Widget.Toolbar;
 
 namespace TEditor
 {
     [Activity(Label = "TEditorActivity",
         WindowSoftInputMode = Android.Views.SoftInput.AdjustResize | Android.Views.SoftInput.StateHidden,
         Theme = "@style/Theme.AppCompat.NoActionBar.FullScreen")]
-    public class TEditorActivity : Activity
+    public class TEditorActivity :AppCompatActivity
     {
         const int ToolbarFixHeight = 60;
         TEditorWebView _editorWebView;
         LinearLayoutDetectsSoftKeyboard _rootLayout;
         LinearLayout _toolbarLayout;
-        Android.Support.V7.Widget.Toolbar _topToolBar;
+        Toolbar _topToolBar;
 
         public static Action<bool, string> SetOutput { get; set; }
 
@@ -28,7 +30,7 @@ namespace TEditor
 
             SetContentView(Resource.Layout.TEditorActivity);
 
-            _topToolBar = FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.TopToolbar);
+            _topToolBar = FindViewById<Toolbar>(Resource.Id.TopToolbar);
             _topToolBar.Title = CrossTEditor.PageTitle;
             _topToolBar.InflateMenu(Resource.Menu.TopToolbarMenu);
             _topToolBar.MenuItemClick += async (sender, e) =>

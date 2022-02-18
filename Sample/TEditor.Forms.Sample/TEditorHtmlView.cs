@@ -32,7 +32,7 @@ namespace TEditor.Forms.Sample
             TEditorResponse response = await CrossTEditor.Current.ShowTEditor("<!-- This is an HTML comment --><p>This is a test of the <strong style=\"font-size:20px\">TEditor</strong> by <a title=\"XAM consulting\" href=\"http://www.xam-consulting.com\">XAM consulting</a></p>");
             if (response.IsSave) {
                 if (response.HTML != null) {
-					_displayWebView.Source = new HtmlWebViewSource() { Html = response.HTML };
+                    _displayWebView.Source = new HtmlWebViewSource() { Html = response.HTML };
                 }
             }
         }

@@ -25,7 +25,7 @@ namespace TEditor
 
         static ITEditor CreateTEditor()
         {
-#if PORTABLE
+#if NETSTANDARD
             return null;
 #else
             return new TEditorImplementation();
