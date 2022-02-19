@@ -105,6 +105,8 @@
     <ProjectReference Include="..\..\iOS\TEditor.iOS.csproj">
       <Project>{cc840a90-9db6-4b07-b9dc-d12d2cce506d}</Project>
       <Name>TEditor.iOS</Name>
+      <IsAppExtension>false</IsAppExtension>
+      <IsWatchApp>false</IsWatchApp>
     </ProjectReference>
     <ProjectReference Include="..\TEditor.Forms.Sample\TEditor.Forms.Sample.csproj">
       <Project>{2f01342a-33ca-4e29-ae4d-f6a13226327f}</Project>

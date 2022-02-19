@@ -39,8 +39,9 @@ namespace TEditor
             activity.Window.DecorView.GetWindowVisibleDisplayFrame(rect);
             int VisibleHeight = rect.Height();
             Point size = new Point();
-            activity.WindowManager.DefaultDisplay.GetSize(size);
-            int screenHeight = size.Y;
+            //activity.WindowManager.DefaultDisplay.GetSize(size);
+            //int screenHeight = size.Y;
+            int screenHeight = (int)Xamarin.Essentials.DeviceDisplay.MainDisplayInfo.Height;
             int diff = screenHeight - VisibleHeight;
             if (onKeyboardShown != null)
             {

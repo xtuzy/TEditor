@@ -26,7 +26,7 @@ namespace TEditor
                 return base.ShouldInterceptRequest(view, request);
             return null;
         }
-
+        [Obsolete]
         public override bool ShouldOverrideUrlLoading(WebView view, string url)
         {
             if (url.Contains("scroll://"))

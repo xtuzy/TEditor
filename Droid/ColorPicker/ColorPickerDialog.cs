@@ -71,11 +71,11 @@ namespace MonoDroid.ColorPickers
         {
             var inflater = (LayoutInflater) Context.GetSystemService(Context.LayoutInflaterService);
 
-		    var layout = inflater.Inflate(TEditor.Resource.Layout.dialog_color_picker, null);
+            var layout = inflater.Inflate(TEditor.Resource.Layout.dialog_color_picker, null);
 
-		    SetContentView(layout);
+            SetContentView(layout);
 
-		    SetTitle(TEditor.Resource.String.dialog_color_picker);
+            SetTitle(TEditor.Resource.String.dialog_color_picker);
 
             _colorPicker = layout.FindViewById<ColorPickerView>(TEditor.Resource.Id.color_picker_view);
             _oldColor = layout.FindViewById<ColorPickerPanelView>(TEditor.Resource.Id.old_color_panel);
@@ -83,10 +83,10 @@ namespace MonoDroid.ColorPickers
 
             ((LinearLayout)_oldColor.Parent).SetPadding(
                 (int) Math.Round(_colorPicker.DrawingOffset), 
-			    0,
+                0,
                 (int) Math.Round(_colorPicker.DrawingOffset), 
-			    0
-		    );
+                0
+            );
 
             _oldColor.SetOnClickListener(this);
             _newColor.SetOnClickListener(this);
@@ -102,15 +102,15 @@ namespace MonoDroid.ColorPickers
 
         public void OnClick(View v)
         {
-			if (v.Id == TEditor.Resource.Id.new_color_panel) {
-				if (ColorChanged != null)
-					ColorChanged(this, new ColorChangedEventArgs { Color = _newColor.Color });
-			}
+            if (v.Id == TEditor.Resource.Id.new_color_panel) {
+                if (ColorChanged != null)
+                    ColorChanged(this, new ColorChangedEventArgs { Color = _newColor.Color });
+            }
 
-			if (v.Id == TEditor.Resource.Id.old_color_panel) {
-				if (ColorChanged != null)
-					ColorChanged(this, new ColorChangedEventArgs { Color = _oldColor.Color });
-			}
+            if (v.Id == TEditor.Resource.Id.old_color_panel) {
+                if (ColorChanged != null)
+                    ColorChanged(this, new ColorChangedEventArgs { Color = _oldColor.Color });
+            }
             GC.Collect();
             Dismiss();
         }

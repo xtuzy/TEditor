@@ -8,19 +8,21 @@ using TEditor.Abstractions;
 using AndroidX.AppCompat.App;
 using AndroidX.AppCompat.Widget;
 using Toolbar = AndroidX.AppCompat.Widget.Toolbar;
+using Android.Graphics;
 
 namespace TEditor
 {
     [Activity(Label = "TEditorActivity",
         WindowSoftInputMode = Android.Views.SoftInput.AdjustResize | Android.Views.SoftInput.StateHidden,
         Theme = "@style/Theme.AppCompat.NoActionBar.FullScreen")]
-    public class TEditorActivity :AppCompatActivity
+    public class TEditorActivity : Activity
     {
         const int ToolbarFixHeight = 60;
         TEditorWebView _editorWebView;
         LinearLayoutDetectsSoftKeyboard _rootLayout;
         LinearLayout _toolbarLayout;
         Toolbar _topToolBar;
+        private LinearLayout toolbarItems;
 
         public static Action<bool, string> SetOutput { get; set; }
 
@@ -28,9 +30,9 @@ namespace TEditor
         {
             base.OnCreate(savedInstanceState);
 
-            SetContentView(Resource.Layout.TEditorActivity);
-
-            _topToolBar = FindViewById<Toolbar>(Resource.Id.TopToolbar);
+            //SetContentView(Resource.Layout.TEditorActivity);
+            SetContentView(CreatePageForDebug());
+            //_topToolBar = FindViewById<Toolbar>(Resource.Id.TopToolbar);
             _topToolBar.Title = CrossTEditor.PageTitle;
             _topToolBar.InflateMenu(Resource.Menu.TopToolbarMenu);
             _topToolBar.MenuItemClick += async (sender, e) =>
@@ -42,16 +44,17 @@ namespace TEditor
                         string html = await _editorWebView.GetHTML();
                         SetOutput.Invoke(true, html);
                     }
-                    else {
+                    else
+                    {
                         SetOutput.Invoke(false, null);
                     }
                 }
                 Finish();
             };
 
-            _rootLayout = FindViewById<LinearLayoutDetectsSoftKeyboard>(Resource.Id.RootRelativeLayout);
-            _editorWebView = FindViewById<TEditorWebView>(Resource.Id.EditorWebView);
-            _toolbarLayout = FindViewById<LinearLayout>(Resource.Id.ToolbarLayout);
+            //_rootLayout = FindViewById<LinearLayoutDetectsSoftKeyboard>(Resource.Id.RootRelativeLayout);
+            //_editorWebView = FindViewById<TEditorWebView>(Resource.Id.EditorWebView);
+            //_toolbarLayout = FindViewById<LinearLayout>(Resource.Id.ToolbarLayout);
 
             _rootLayout.onKeyboardShown += HandleSoftKeyboardShwon;
             _editorWebView.SetOnCreateContextMenuListener(this);
@@ -63,6 +66,54 @@ namespace TEditor
 
             bool autoFocusInput = Intent.GetBooleanExtra("AutoFocusInput", false);
             _editorWebView.SetAutoFocusInput(autoFocusInput);
+        }
+
+        ViewGroup CreatePageForDebug()
+        {
+            _rootLayout = new LinearLayoutDetectsSoftKeyboard(this)
+            {
+                Orientation = Orientation.Vertical,
+                LayoutParameters = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MatchParent, ViewGroup.LayoutParams.MatchParent),
+            };
+            _topToolBar = new Toolbar(this)
+            {
+                LayoutParameters = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MatchParent, ViewGroup.LayoutParams.WrapContent),
+            };
+            _editorWebView = new TEditorWebView(this)
+            {
+                VerticalScrollBarEnabled = false,
+                LayoutParameters = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MatchParent, ViewGroup.LayoutParams.MatchParent)
+                {
+                    TopMargin=0,
+                    BottomMargin=0,
+                },
+            };
+            _editorWebView.SetBackgroundColor(Color.White);
+            _toolbarLayout = new LinearLayout(this)
+            {
+                Orientation = Orientation.Horizontal,
+                LayoutParameters = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MatchParent, ViewGroup.LayoutParams.WrapContent),
+
+            };
+            _toolbarLayout.SetBackgroundColor(Color.DarkGray);
+            _topToolBar.SetPadding(0, 0, 0, 0);
+            var scrollToolBar = new HorizontalScrollView(this)
+            {
+                LayoutParameters = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MatchParent, ViewGroup.LayoutParams.WrapContent),
+            };
+            scrollToolBar.SetPadding(0,0,0,0);
+            toolbarItems = new LinearLayout(this)
+            {
+                Orientation=Orientation.Horizontal,
+                LayoutParameters = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MatchParent, ViewGroup.LayoutParams.WrapContent),
+            };
+
+            _rootLayout.AddView(_topToolBar);
+            _rootLayout.AddView(_editorWebView);
+            _rootLayout.AddView(_toolbarLayout);
+            _toolbarLayout.AddView(scrollToolBar);
+            scrollToolBar.AddView(toolbarItems);
+            return _rootLayout;
         }
 
         protected override void Dispose(bool disposing)
@@ -87,7 +138,7 @@ namespace TEditor
                 string imagename = item.ImagePath.Split('.')[0];
                 int resourceId = (int)typeof(Resource.Drawable).GetField(imagename).GetValue(null);
                 imagebutton.SetImageResource(resourceId);
-                var toolbarItems = FindViewById<LinearLayout>(Resource.Id.ToolbarItemsLayout);
+                //var toolbarItems = FindViewById<LinearLayout>(Resource.Id.ToolbarItemsLayout);
                 toolbarItems.AddView(imagebutton);
             }
         }
@@ -107,7 +158,8 @@ namespace TEditor
                 _editorWebView.LayoutParameters.Width = LinearLayout.LayoutParams.MatchParent;
                 _editorWebView.RequestLayout();
             }
-            else {
+            else
+            {
                 if (newHeight != 0)
                 {
                     _toolbarLayout.Visibility = Android.Views.ViewStates.Invisible;
